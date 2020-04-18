@@ -95,12 +95,24 @@ void handleQuery(int serRead)
 
     case 'H':
       response = String(getHumidity());
-      break;  
+      break;
+
+    case '1':
+    case '2':
+    case '3':
+    case '4':
+      response = String(getRelayStatus(serRead - 47));
+      break;
   }
 
   Serial.write("_");  // SOH
   Serial.write(response.c_str());
   Serial.write("_"); // EOT
+}
+
+int getRelayStatus(int pin)
+{
+  return digitalRead(pin);
 }
 
 float getTemp()
